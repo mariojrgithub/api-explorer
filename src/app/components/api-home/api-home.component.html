@@ -1,0 +1,145 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand"><span class="bold">API Explorer</span></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li> -->
+          <li [hidden]="hideMenu" class="nav-item dropdown">
+            <a   
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Categories
+            </a>
+            <ul class="dropdown-menu force-scroll" aria-labelledby="navbarDropdown">
+              <li *ngFor="let cat of categories"><a class="dropdown-item" href="#">{{ cat }}</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input
+            ngModel
+            class="form-control me-2"
+            type="text"
+            placeholder="Search API's"
+            aria-label="Search"
+            #term="ngModel"
+            name="term"
+            id="search-term"
+            (ngModelChange)="searchApis(term.value)"
+            autocomplete="off"
+          />
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="card text-center pages">
+    <h4 class="card-header">API's For Developers</h4>
+    <div class="card-body">
+      <h5 class="card-title">Explore Over 1400 API's</h5>
+      <p class="card-text">
+        Find the perfect API to begin building your project with. Within this
+        collection we are sure there is something you will love.
+      </p>
+      <button
+        id="btn"
+        [disabled]="disabled"
+        (click)="fetchAllApis()"
+        class="btn btn-primary"
+      >
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          [hidden]="hidden"
+        ></span>
+        Show API's
+      </button>
+    </div>
+  </div>
+
+  <div *ngFor="let entry of apiArray?.slice(page, page! + 1)">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div *ngFor="let e of entry" class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ e?.API }}</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item card-text">
+                <span class="bold">Category:</span> {{ e?.Category }}
+              </li>
+              <li class="list-group-item card-text">
+                <span class="bold">Description:</span> {{ e?.Description }}
+              </li>
+              <li class="list-group-item card-text">
+                <span class="bold">HTTPS:</span> {{ e?.HTTPS }}
+              </li>
+              <li *ngIf="e?.Auth !== ''" class="list-group-item card-text">
+                <span class="bold">Auth:</span> {{ e?.Auth }}
+              </li>
+              <li class="list-group-item card-text">
+                <span class="bold">Cors:</span> {{ e?.Cors }}
+              </li>
+              <li class="list-group-item card-text">
+                <a href="{{ e?.Link }}" target="_blank">{{ e?.Link }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav
+    class="pages"
+    *ngIf="numOfPages! > 0"
+    aria-label="Page navigation example"
+  >
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a
+          (click)="lastPage()"
+          class="page-link"
+          href="#"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li
+        *ngFor="let entry of apiArray; let i = index"
+        (click)="setPage(i)"
+        class="page-item"
+        [class.active]="page === i"
+      >
+        <a class="page-link" href="#">{{ i + 1 }}</a>
+      </li>
+      <li>
+        <a (click)="nextPage()" class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

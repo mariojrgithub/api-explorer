@@ -1,0 +1,127 @@
+import { Component, OnInit } from '@angular/core';
+import { ApiEntry } from 'src/app/models/apientry';
+import { ApiService } from 'src/app/services/api.service';
+
+@Component({
+  selector: 'app-api-home',
+  templateUrl: './api-home.component.html',
+  styleUrls: ['./api-home.component.css'],
+})
+export class ApiHomeComponent implements OnInit {
+  apiArray?: ApiEntry[][];
+
+  tempArray?: ApiEntry[];
+
+  categories?: any[];
+
+  page?: number = 0;
+
+  numOfPages?: number = 0;
+
+  hidden?: string = 'hidden';
+
+  hideMenu?: string = 'hidden'
+
+  disabled?: string = '';
+
+  constructor(private apiServ: ApiService) {}
+
+  ngOnInit(): void {}
+
+  public fetchAllApis(): void {
+    this.hidden = '';
+
+    if(this.categories?.length !== 0){
+      this.hideMenu = "";
+    }
+
+    this.apiServ.getApis().subscribe({
+      next: (response) => {
+        this.tempArray = response['entries'];
+
+        const cats = new Set();
+        this.tempArray?.forEach((item) => {
+          cats.add(item.Category);
+        })
+
+        this.categories = Array.from(cats);
+
+        this.paginate(response['entries'], 20);
+        this.numOfPages = this.apiArray?.length;
+
+        if (this.apiArray?.length !== 0) {
+          this.disabled = 'disabled';
+        }
+        console.log(this.tempArray);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  public paginate(array: any[], pageNum: number): void {
+    let start = 0;
+    let end = Math.floor(array.length / pageNum);
+    let pages: ApiEntry[][] = [];
+    let temp: ApiEntry[] = [];
+
+    while (start < array.length) {
+      for (start; start < end; start++) {
+        if (array[start] !== undefined) {
+          temp.push(array[start]);
+        }
+      }
+      pages.push(temp);
+      temp = [];
+      end = end + Math.floor(array.length / pageNum);
+    }
+
+    this.apiArray = pages;
+    this.hidden = 'hidden';
+  }
+
+  public setPage(num: number): void {
+    this.page = num;
+  }
+
+  public nextPage(): void {
+    if (this.page! < this.apiArray!.length - 1) {
+      this.page = this.page! + 1;
+    }
+  }
+
+  public lastPage(): void {
+    if (this.page! > 0) {
+      this.page = this.page! - 1;
+    }
+  }
+
+  public searchApis(term: string): void {
+    const results: ApiEntry[] = [];
+
+    this.tempArray?.forEach((item, i) => {
+      if (this.tempArray![i].API.toLowerCase().includes(term.toLowerCase())) {
+        results.push(this.tempArray![i]);
+      }
+    });
+
+    if (results.length > 100 && results.length !== 0) {
+      this.paginate(results, 4);
+    } else if (results.length !== 0) {
+      this.paginate(results, 1);
+    }
+
+    if (results.length === 0) {
+      alert('There are no results for ' + term);
+      document.getElementsByTagName('input')[0].value = '';
+      this.disabled = "";
+    }
+
+    if (!term) {
+      this.apiArray = [];
+      this.numOfPages = 0;
+      this.fetchAllApis();
+    }
+  }
+}

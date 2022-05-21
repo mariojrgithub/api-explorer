@@ -1,0 +1,17 @@
+.bold {
+  font-weight: bold;
+}
+
+li:hover {
+  background-color: aqua;
+}
+
+.pages {
+  margin: 1em 1em;
+}
+
+.force-scroll {
+  overflow-y: scroll;
+
+  height: 250px;
+}
