@@ -30,6 +30,7 @@ export class ApiHomeComponent implements OnInit {
 
   public fetchAllApis(): void {
     this.hidden = '';
+    document.getElementsByTagName('input')[0].value = '';
 
     if(this.categories?.length !== 0){
       this.hideMenu = "";
@@ -40,19 +41,19 @@ export class ApiHomeComponent implements OnInit {
         this.tempArray = response['entries'];
 
         const cats = new Set();
-        this.tempArray?.forEach((item) => {
-          cats.add(item.Category);
+        this.tempArray?.forEach((item, i) => {
+          cats.add(item?.Category);
         })
 
         this.categories = Array.from(cats);
 
-        this.paginate(response['entries'], 20);
+        this.paginate(this.tempArray!, 20);
         this.numOfPages = this.apiArray?.length;
 
         if (this.apiArray?.length !== 0) {
           this.disabled = 'disabled';
         }
-        console.log(this.tempArray);
+        // console.log(this.tempArray);
       },
       error: (error) => {
         console.log(error);
@@ -99,12 +100,14 @@ export class ApiHomeComponent implements OnInit {
 
   public searchApis(term: string): void {
     const results: ApiEntry[] = [];
-
+    
     this.tempArray?.forEach((item, i) => {
-      if (this.tempArray![i].API.toLowerCase().includes(term.toLowerCase())) {
-        results.push(this.tempArray![i]);
+      if (item.API.toLowerCase().includes(term.toLowerCase())) {
+        results.push(item);
       }
     });
+    console.log(results)
+    this.page = 0;
 
     if (results.length > 100 && results.length !== 0) {
       this.paginate(results, 4);
