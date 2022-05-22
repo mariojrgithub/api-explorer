@@ -33,7 +33,7 @@
               Categories
             </a>
             <ul class="dropdown-menu force-scroll" aria-labelledby="navbarDropdown">
-              <li *ngFor="let cat of categories"><a class="dropdown-item" href="#">{{ cat }}</a></li>
+              <li *ngFor="let cat of categories"><a (click)="goToCategory(cat)" class="dropdown-item" href="#">{{ cat }}</a></li>
             </ul>
           </li>
         </ul>

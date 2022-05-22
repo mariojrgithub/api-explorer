@@ -129,6 +129,22 @@ export class ApiHomeComponent implements OnInit {
     }
   }
 
+  public goToCategory(term: string): void {
+    const results: ApiEntry[] = [];
+    
+    this.tempArray?.forEach((item, i) => {
+      if (item.Category.toLowerCase().includes(term.toLowerCase())) {
+        results.push(item);
+      }
+    });
+    console.log(results)
+    this.page = 0;
 
+    if (results.length > 100 && results.length !== 0) {
+      this.paginate(results, 4);
+    } else if (results.length !== 0) {
+      this.paginate(results, 1);
+    }
+  }
 
 }
