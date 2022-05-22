@@ -24,7 +24,7 @@ export class ApiHomeComponent implements OnInit {
 
   disabled?: string = '';
 
-  constructor(private apiServ: ApiService) {}
+  constructor(private window: Window, private apiServ: ApiService) {}
 
   ngOnInit(): void {}
 
@@ -47,7 +47,7 @@ export class ApiHomeComponent implements OnInit {
 
         this.categories = Array.from(cats);
 
-        this.paginate(this.tempArray!, 20);
+        this.paginate(this.tempArray!, 10);
         this.numOfPages = this.apiArray?.length;
 
         if (this.apiArray?.length !== 0) {
@@ -84,6 +84,7 @@ export class ApiHomeComponent implements OnInit {
 
   public setPage(num: number): void {
     this.page = num;
+    console.log(this.page)
   }
 
   public nextPage(): void {
@@ -127,4 +128,7 @@ export class ApiHomeComponent implements OnInit {
       this.fetchAllApis();
     }
   }
+
+
+
 }

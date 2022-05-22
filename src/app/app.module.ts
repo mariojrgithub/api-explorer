@@ -18,7 +18,7 @@ import { ApiHomeComponent } from './components/api-home/api-home.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{provide: Window, useValue: window}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
