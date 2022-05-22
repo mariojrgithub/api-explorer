@@ -24,7 +24,7 @@ export class ApiHomeComponent implements OnInit {
 
   disabled?: string = '';
 
-  constructor(private window: Window, private apiServ: ApiService) {}
+  constructor(private apiServ: ApiService) {}
 
   ngOnInit(): void {}
 
