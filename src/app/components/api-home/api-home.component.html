@@ -77,6 +77,7 @@
         Show API's
       </button>
     </div>
+    <p *ngIf="numResults !== 0"># of Results: <span class="bold">{{ numResults }}</span></p>
   </div>
 
   <div *ngFor="let entry of apiArray?.slice(page, page! + 1)">

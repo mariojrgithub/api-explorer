@@ -24,6 +24,8 @@ export class ApiHomeComponent implements OnInit {
 
   disabled?: string = '';
 
+  numResults?: number = 0;
+
   constructor(private apiServ: ApiService) {}
 
   ngOnInit(): void {}
@@ -53,7 +55,8 @@ export class ApiHomeComponent implements OnInit {
         if (this.apiArray?.length !== 0) {
           this.disabled = 'disabled';
         }
-        // console.log(this.tempArray);
+        
+        this.numResults = this.tempArray?.length;
       },
       error: (error) => {
         console.log(error);
@@ -109,6 +112,7 @@ export class ApiHomeComponent implements OnInit {
     });
     console.log(results)
     this.page = 0;
+    this.numResults = results?.length;
 
     if (results.length > 100 && results.length !== 0) {
       this.paginate(results, 4);
@@ -121,12 +125,14 @@ export class ApiHomeComponent implements OnInit {
       document.getElementsByTagName('input')[0].value = '';
       this.disabled = "";
     }
-
+    
     if (!term) {
       this.apiArray = [];
       this.numOfPages = 0;
+      this.numResults = 0;
       this.fetchAllApis();
     }
+
   }
 
   public goToCategory(term: string): void {
@@ -146,6 +152,8 @@ export class ApiHomeComponent implements OnInit {
     } else if (results.length !== 0) {
       this.paginate(results, 1);
     }
+
+    this.numResults = results?.length;
   }
 
 }
