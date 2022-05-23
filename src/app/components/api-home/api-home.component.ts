@@ -139,6 +139,7 @@ export class ApiHomeComponent implements OnInit {
     });
     console.log(results)
     this.page = 0;
+    this.disabled = "";
 
     if (results.length > 100 && results.length !== 0) {
       this.paginate(results, 4);
