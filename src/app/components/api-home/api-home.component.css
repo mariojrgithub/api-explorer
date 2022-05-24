@@ -3,7 +3,12 @@
 }
 
 li:hover {
-  background-color: aqua;
+  background-color: #1ca2e6;
+  color: white;
+}
+
+.dropdown {
+  border-radius: 2em;
 }
 
 .navbar{
@@ -26,6 +31,6 @@ li:hover {
 }
 
 #btn {
-  background-color: #1ca2e6;
+  background-color: blue;
 }
 
