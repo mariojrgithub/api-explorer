@@ -144,6 +144,7 @@ export class ApiHomeComponent implements OnInit {
       }
     });
     console.log(results)
+    document.getElementsByTagName('input')[0].value = '';
     this.page = 0;
     this.disabled = "";
 
