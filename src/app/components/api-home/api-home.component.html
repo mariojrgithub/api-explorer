@@ -55,7 +55,7 @@
     </div>
   </nav>
 
-  <div class="card text-center pages">
+  <div class="card text-center pages" style="margin-top: 1em;">
     <h4 class="card-header">API's For Developers</h4>
     <div class="card-body">
       <h5 class="card-title">Explore Over 1400 API's</h5>
@@ -116,9 +116,10 @@
   </div>
 
   <nav
-    class="pages"
+    class="pages sticky-bottom"
     *ngIf="numOfPages! > 0"
     aria-label="Page navigation example"
+    style="padding-bottom: 0.5em; padding-top: 0.5em;"
   >
     <ul class="pagination justify-content-center">
       <li class="page-item">
@@ -139,7 +140,7 @@
       >
         <a class="page-link" href="#">{{ i + 1 }}</a>
       </li>
-      <li>
+      <li class="page-item">
         <a (click)="nextPage()" class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>

@@ -6,13 +6,26 @@ li:hover {
   background-color: aqua;
 }
 
-.pages {
-  margin: 1em 1em;
+.navbar{
+  border-color: #1ca2e6;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 1px 5px 10px blue;
+}
+
+.page-item{
+  border-color: #1ca2e6;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 1px 5px 10px blue;
 }
 
 .force-scroll {
   overflow-y: scroll;
-
   height: 250px;
+}
+
+#btn {
+  background-color: #1ca2e6;
 }
 
